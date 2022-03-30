@@ -19,29 +19,29 @@ An app for taking online booking appointment for a doctor at your home and you c
 ## Screenshot
     - Login/Sign up 
         For Login and Sign up Phone Auth is used from Firebase Authenication.
-    ![LOGIN!](screenshots/login.png)
-    ![OTP!](screenshots/otp.png) 
-    ![REGISTER!](screenshots/register.png)
+    ![LOGIN!](/screenshots/login.png)
+    ![OTP!](/screenshots/otp.png) 
+    ![REGISTER!](/screenshots/register.png)
     - Home 
         Clean and Responsive view of Home having categories of specialist according to the dieases.
-        ![HOME!](screenshots/home.png)
+        ![HOME!](/screenshots/home.png)
     - Choose City    
         You can change city and accrodingly you will get specialists.
-        ![CITY!](screenshots/citychoose.png)
+        ![CITY!](/screenshots/citychoose.png)
     - View Doctors and Labs    
-        ![DRLIST!](screenshots/doctorlist.png) 
-        ![NODR!](screenshots/nodata.png) 
-        ![LABS!](screenshots/labs.png)
+        ![DRLIST!](/screenshots/doctorlist.png) 
+        ![NODR!](/screenshots/nodata.png) 
+        ![LABS!](/screenshots/labs.png)
     - Search Doctors
-         ![SEARCH!](screenshots/searchdr.png)       
+         ![SEARCH!](/screenshots/searchdr.png)       
     - Notification     
-        ![NOTIFICATION!](screenshots/notification.png)
+        ![NOTIFICATION!](/screenshots/notification.png)
     - Profile
-        ![DRPROFILE!](screenshots/drprofile.png) 
-        ![USERPROFILE!](screenshots/profile.png)
-        ![EDITPR!](screenshots/editprofile.png)
+        ![DRPROFILE!](/screenshots/drprofile.png) 
+        ![USERPROFILE!](/screenshots/profile.png)
+        ![EDITPR!](/screenshots/editprofile.png)
     - Book appointment
-        ![BOOK!](screenshots/book.png)
+        ![LOGIN!](/screenshots/book.png)
 ## Credits
   - UI/UX inspired [**here**](https://www.youtube.com/watch?v=dmX7odWOIqc)  
        
