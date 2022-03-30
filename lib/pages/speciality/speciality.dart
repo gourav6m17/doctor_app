@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_doctor_app/constant/constant.dart';
-import 'package:my_doctor_app/models/drModel.dart';
-import 'package:my_doctor_app/pages/screens.dart';
+import 'package:user_doctor_client/constant/constant.dart';
+import 'package:user_doctor_client/models/drModel.dart';
+import 'package:user_doctor_client/pages/screens.dart';
 import 'package:page_transition/page_transition.dart';
 
 class Speciality extends StatefulWidget {

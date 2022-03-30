@@ -7,6 +7,7 @@ Color whiteColor = Colors.white;
 Color blackColor = Colors.black;
 Color lightPrimaryColor = primaryColor.withOpacity(0.2);
 Color darkBlueColor = Color(0xFF151C48);
+const String paymentApiKey = "";
 
 double fixPadding = 10.0;
 

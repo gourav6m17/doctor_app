@@ -1,10 +1,11 @@
-import 'package:my_doctor_app/appBehaviour/my_behaviour.dart';
-import 'package:my_doctor_app/pages/screens.dart';
-import 'package:my_doctor_app/pages/splashScreen.dart';
+import 'package:user_doctor_client/pages/screens.dart';
+import 'package:user_doctor_client/pages/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_doctor_app/provider/auth_provider.dart';
+import 'package:user_doctor_client/provider/LocationService.dart';
+import 'package:user_doctor_client/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
+import 'appBehaviour/my_behaviour.dart';
 import 'constant/constant.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -24,11 +25,11 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
-
+        //ChangeNotifierProvider(create: (_) => GenerateMaps()),
         //ChangeNotifierProvider(create: (_) => data())
       ],
       child: MaterialApp(
-        title: 'MyDoctor User App',
+        title: 'Doctor Client',
         theme: ThemeData(
           primarySwatch: Colors.blue,
           primaryColor: primaryColor,
@@ -41,12 +42,12 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.transparent,
         ),
         debugShowCheckedModeBanner: false,
-        builder: (context, child) {
-          return ScrollConfiguration(
-            behavior: MyBehavior(),
-            child: child,
-          );
-        },
+        // builder: (context, child) {
+        //   return ScrollConfiguration(
+        //     behavior: MyBehavior(),
+        //     child: child,
+        //   );
+        // },
         home: SplashScreen(),
       ),
     );

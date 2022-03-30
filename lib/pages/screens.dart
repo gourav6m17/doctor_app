@@ -21,4 +21,4 @@ export 'login_signup/otp.dart';
 export 'login_signup/register.dart';
 export 'notifications/notifications.dart';
 export 'splashScreen.dart';
-export 'search/search.dart';
+// export 'search/search.dart';

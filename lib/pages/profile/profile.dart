@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:my_doctor_app/constant/constant.dart';
-import 'package:my_doctor_app/models/UserModel.dart';
-import 'package:my_doctor_app/pages/screens.dart';
+import 'package:user_doctor_client/constant/constant.dart';
+import 'package:user_doctor_client/models/UserModel.dart';
+import 'package:user_doctor_client/pages/screens.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -18,7 +18,7 @@ class _ProfileState extends State<Profile> {
   UserModel userObj;
   List<UserModel> userList = [];
   Map<String, dynamic> data = Map<String, dynamic>();
-  String salphnNo = "+918226963037";
+  String salphnNo;
   Future<void> _launched;
 
   Future<void> _makePhoneCall(String url) async {
@@ -29,8 +29,17 @@ class _ProfileState extends State<Profile> {
     }
   }
 
+  getHelpMob() {
+    db.collection("extras").doc("help").get().then((value) {
+      final data = value.data();
+      salphnNo = data["mobile"];
+      print("-------$salphnNo");
+    });
+  }
+
   @override
   void initState() {
+    getHelpMob();
     super.initState();
   }
 
@@ -198,8 +207,124 @@ class _ProfileState extends State<Profile> {
           }
 
           if (snapshot.hasError) {
-            return Center(
-              child: Text(snapshot.error.toString()),
+            return ListView(
+              children: [
+                heightSpace,
+                heightSpace,
+                Center(
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 100.0,
+                        height: 100.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(23.0),
+                          border: Border.all(width: 0.2, color: greyColor),
+                          image: DecorationImage(
+                            image: AssetImage("assets/user/user_1.jpg"),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      heightSpace,
+                      Text(
+                        "User!",
+                        style: appBarTitleTextStyle,
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(fixPadding * 2.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Account Info',
+                        style: blackHeadingTextStyle,
+                      ),
+                      heightSpace,
+                      heightSpace,
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  duration: Duration(milliseconds: 500),
+                                  type: PageTransitionType.rightToLeft,
+                                  child: EditProfile(
+                                    email: "",
+                                    name: "",
+                                    age: "",
+                                    image: "",
+                                  )));
+                        },
+                        child: listItem(
+                            primaryColor, Icons.person, 'Edit Profile'),
+                      ),
+                      heightSpace,
+                      //listItem(Colors.red, Icons.assignment, 'My History'),
+                    ],
+                  ),
+                ),
+                divider(),
+                Container(
+                  padding: EdgeInsets.all(fixPadding * 2.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'About App',
+                        style: blackHeadingTextStyle,
+                      ),
+                      heightSpace,
+                      heightSpace,
+                      //listItem(Colors.orange, Icons.local_offer, 'Coupon Codes'),
+                      heightSpace,
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  duration: Duration(milliseconds: 500),
+                                  type: PageTransitionType.rightToLeft,
+                                  child: AboutUs()));
+                        },
+                        child:
+                            listItem(primaryColor, Icons.touch_app, 'About Us'),
+                      ),
+                      heightSpace,
+                      //listItem(Colors.green, Icons.star_border, 'Rate Us'),
+                      heightSpace,
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            _launched = _makePhoneCall("tel:$salphnNo");
+                          });
+                        },
+                        child: listItem(Colors.red, Icons.help_outline, 'Help'),
+                      )
+                    ],
+                  ),
+                ),
+                divider(),
+                Container(
+                  padding: EdgeInsets.all(fixPadding * 2.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        onTap: () => logoutDialogue(),
+                        child:
+                            listItem(Colors.teal, Icons.exit_to_app, 'Logout'),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             );
           }
           if (snapshot.hasData) {
@@ -217,7 +342,7 @@ class _ProfileState extends State<Profile> {
                           borderRadius: BorderRadius.circular(23.0),
                           border: Border.all(width: 0.2, color: greyColor),
                           image: DecorationImage(
-                            image: (snapshot.data.userImage == null)
+                            image: (snapshot.data.userImage == "")
                                 ? AssetImage("assets/user/user_1.jpg")
                                 : NetworkImage(snapshot.data.userImage),
                             fit: BoxFit.cover,

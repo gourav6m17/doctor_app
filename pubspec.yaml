@@ -1,8 +1,8 @@
-name: my_doctor_app
-description: An app for taking online booking appointment for a doctor at your home.
+name: user_doctor_client
+description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
-# pub.dev using `pub publish`. This is preferred for private packages.
+# pub.dev using `pub publish`. This is preferred for private packflages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.2.0+1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -28,28 +28,27 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  fluttertoast: ^7.1.8
-  dotted_border: ^1.0.6
-  flutter_spinkit: ^3.1.0
-  page_transition: ^1.1.6
-  font_awesome_flutter: ^8.8.1
-  dotted_line: ^2.0.1
-  # intl_phone_number_input: ^0.4.6+2
+  fluttertoast: ^8.0.9
+  dotted_border: ^2.0.0+2
+  flutter_spinkit: ^5.1.0
+  page_transition: ^2.0.5
+  font_awesome_flutter: ^10.1.0
+  dotted_line: ^3.1.0
+  # intl_phone_number_input: ^0.7.0+2
   carousel_pro: ^1.0.0
-  google_maps_flutter: ^0.5.28+1
-  flutter_slidable: ^0.5.7
+  google_maps_flutter: ^2.1.3
+  flutter_slidable: ^1.2.0
   horizontal_calendar_widget: ^1.0.0+1
-  firebase_core: "0.7.0"
-  firebase_auth: "^0.20.1"
-  provider: "^4.3.3"
-  cloud_firestore: "^0.16.0+1 "
-  # geolocator: ^6.0.0
-  # geocoder: ^0.2.1
+  firebase_core: ^1.13.1
+  firebase_auth: ^3.3.11
+  provider: ^6.0.2
+  cloud_firestore: ^3.1.10
   url_launcher: ^6.0.2
   maps_launcher: ^2.0.0
-  image_picker: ^0.6.7+22
-  firebase_storage: ^7.0.0
-  
+  image_picker: ^0.8.4+11
+  firebase_storage: ^10.2.9
+  razorpay_flutter: ^1.2.3
+  intl_phone_number_input: ^0.7.0+2
   # in_app_review: ^1.0.0
   
   
@@ -61,7 +60,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.7.3"
+  flutter_launcher_icons: ^0.9.2
+  
 
 flutter_icons:
   android: "launcher_icon"
@@ -83,6 +83,7 @@ flutter:
     - assets/user/
     - assets/payment_icon/
     - assets/empty_img.png
+    - assets/Logo/
 
   fonts:
     - family: Noto Sans

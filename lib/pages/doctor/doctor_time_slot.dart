@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:horizontal_calendar_widget/date_helper.dart';
 import 'package:horizontal_calendar_widget/horizontal_calendar.dart';
-import 'package:my_doctor_app/constant/constant.dart';
-import 'package:my_doctor_app/models/drModel.dart';
-import 'package:my_doctor_app/pages/doctor/consultation_detail.dart';
-import 'package:my_doctor_app/pages/doctor/doctor_profile.dart';
+import 'package:user_doctor_client/constant/constant.dart';
+import 'package:user_doctor_client/models/drModel.dart';
+import 'package:user_doctor_client/pages/doctor/consultation_detail.dart';
+import 'package:user_doctor_client/pages/doctor/doctor_profile.dart';
 import 'package:page_transition/page_transition.dart';
 
 const labelMonth = 'Month';
@@ -17,17 +17,27 @@ class DoctorTimeSlot extends StatefulWidget {
   final int selectedAppType;
   final LatLng pos;
   final DrModel drObj;
+  final String drUid;
+  final String drAddress;
+  final String about;
+  final String price;
+  final int pricePayment;
 
   const DoctorTimeSlot({
     Key key,
-    @required this.doctorName,
-    @required this.doctorImage,
-    @required this.doctorType,
-    @required this.experience,
-    @required this.drObj,
-    @required this.pos,
-    @required this.selectedAppType,
-    @required this.typeOfDoctor,
+    this.doctorName,
+    this.doctorImage,
+    this.doctorType,
+    this.experience,
+    this.drObj,
+    this.pos,
+    this.selectedAppType,
+    this.typeOfDoctor,
+    this.drUid,
+    this.drAddress,
+    this.about,
+    this.price,
+    this.pricePayment,
   }) : super(key: key);
   @override
   _DoctorTimeSlotState createState() => _DoctorTimeSlotState();
@@ -68,7 +78,7 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
   void initState() {
     super.initState();
     const int days = 30;
-    firstDate = toDateMonthYear(DateTime.now());
+    firstDate = toDateMonthYear(DateTime.now().add(Duration(days: 1)));
     lastDate = toDateMonthYear(firstDate.add(Duration(days: days - 1)));
     selectedDateCount = RangeValues(
       minSelectedDateCount.toDouble(),
@@ -169,13 +179,15 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
                             type: PageTransitionType.rightToLeft,
                             duration: Duration(milliseconds: 600),
                             child: ConsultationDetail(
+                              price: widget.price,
+                              drUid: widget.drUid,
                               doctorName: widget.doctorName,
                               doctorType: widget.doctorType,
                               doctorExp: widget.experience,
                               doctorImage: widget.doctorImage,
                               date: selectedDate,
                               time: selectedTime,
-                              price: widget.drObj.price,
+                              pricePayment: widget.pricePayment,
                               selectedAppType: widget.selectedAppType,
                               pos: widget.pos,
                               drObj: widget.drObj,
@@ -267,6 +279,8 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
                                                       milliseconds: 600),
                                                   type: PageTransitionType.fade,
                                                   child: DoctorProfile(
+                                                    rating: widget.drObj.rating,
+                                                    time: widget.drObj.timing,
                                                     doctorImage:
                                                         widget.doctorImage,
                                                     doctorName:
@@ -275,9 +289,8 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
                                                         widget.doctorType,
                                                     experience:
                                                         widget.experience,
-                                                    about: widget.drObj.about,
-                                                    address:
-                                                        widget.drObj.drAddress,
+                                                    about: widget.about,
+                                                    address: widget.drAddress,
                                                     pos: widget.pos,
                                                   )));
                                         },
@@ -307,7 +320,7 @@ class _DoctorTimeSlotState extends State<DoctorTimeSlot> {
                                       style: blackHeadingTextStyle,
                                     )
                                   : Text(
-                                      "\u{20B9} ${widget.drObj.price}",
+                                      "\u{20B9} ${widget.price.toString()}",
                                       style: blackHeadingTextStyle,
                                     ),
                             ],

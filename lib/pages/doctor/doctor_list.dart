@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maps_launcher/maps_launcher.dart';
-import 'package:my_doctor_app/constant/constant.dart';
-import 'package:my_doctor_app/models/drModel.dart';
-import 'package:my_doctor_app/pages/doctor/doctor_time_slot.dart';
+import 'package:user_doctor_client/constant/constant.dart';
+import 'package:user_doctor_client/models/drModel.dart';
+import 'package:user_doctor_client/pages/doctor/doctor_time_slot.dart';
 import 'package:page_transition/page_transition.dart';
 
 enum BookType { oldApp, newApp }
@@ -38,7 +38,7 @@ class _DoctorListState extends State<DoctorList> {
   @override
   void initState() {
     dbs
-        .collection("doctors")
+        .collection("doctor")
         .where('city', isEqualTo: widget.selectedCity)
         .where('doctorTypeList', arrayContains: {'type': widget.doctorList})
         .get()
@@ -46,17 +46,20 @@ class _DoctorListState extends State<DoctorList> {
           querySnapshot.docs.forEach((element) {
             setState(() {
               data = element.data();
-              drObj = new DrModel.fromJson(data);
+              drObj = new DrModel.fromDocument(data);
               drModelList.add(drObj);
-              GeoPoint geo = data['geoCo'];
+              GeoPoint geo = data['pos'];
               pos = LatLng(geo.latitude, geo.longitude);
 
-              print("data===============$data");
+              print("data===============${data["morningSlotList"]}");
+              print(
+                  "---------------${drModelList[0].afternoonSlotList[0].time}");
+              print("======$pos");
             });
           });
         });
 
-    print("===============${widget.doctorList}");
+    // print("===============${widget.doctorList}");
 
     //data.drModelList = data.values.toList();
     super.initState();
@@ -307,6 +310,9 @@ class _DoctorListState extends State<DoctorList> {
                                         duration: Duration(milliseconds: 600),
                                         type: PageTransitionType.fade,
                                         child: DoctorTimeSlot(
+                                          pricePayment:
+                                              drModelList[index].pricePayment,
+                                          drUid: drModelList[index].drUid,
                                           doctorImage:
                                               drModelList[index].drImage,
                                           doctorName: drModelList[index].drName,
@@ -317,6 +323,23 @@ class _DoctorListState extends State<DoctorList> {
                                           pos: pos,
                                           selectedAppType: selectedAppType,
                                           typeOfDoctor: widget.typeOfDoctor,
+                                          about: drModelList[index].about,
+                                          drAddress:
+                                              drModelList[index].drAddress,
+                                          price: drModelList[index].price,
+
+                                          // afternoonSlotList: drModelList[index]
+                                          //     .afternoonSlotList,
+                                          // morningSlotList: drModelList[index]
+                                          //     .morningSlotList,
+                                          // eveningSlotList: drModelList[index]
+                                          //     .eveningSlotList,
+                                          // afternoonSlotList:
+                                          //     data["afternoonSlotList"][index],
+                                          // morningSlotList:
+                                          //     data["morningSlotList"][index],
+                                          // eveningSlotList:
+                                          //     data["eveningSlotList"][index],
                                         ),
                                       ),
                                     );
@@ -349,6 +372,13 @@ class _DoctorListState extends State<DoctorList> {
                                         duration: Duration(milliseconds: 600),
                                         type: PageTransitionType.fade,
                                         child: DoctorTimeSlot(
+                                          pricePayment:
+                                              drModelList[index].pricePayment,
+                                          about: drModelList[index].about,
+                                          drAddress:
+                                              drModelList[index].drAddress,
+                                          price: drModelList[index].price,
+                                          drUid: drModelList[index].drUid,
                                           doctorImage:
                                               drModelList[index].drImage,
                                           doctorName: drModelList[index].drName,

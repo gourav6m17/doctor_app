@@ -1,6 +1,6 @@
 # Doctor Appointment Application in Flutter
 
-An app for taking online booking appointment for a doctor at your home.
+An app for taking online booking appointment for a doctor at your home and you can take consultation. This application is linekd with Firebase for Authentication, Firestore Database
 
 ## Getting Started
 

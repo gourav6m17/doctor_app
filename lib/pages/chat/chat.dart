@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:my_doctor_app/constant/constant.dart';
+import 'package:user_doctor_client/constant/constant.dart';
 
 class ChatScreen extends StatefulWidget {
   final String name;

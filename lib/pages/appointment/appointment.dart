@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:my_doctor_app/constant/constant.dart';
-import 'package:my_doctor_app/models/appointmentModel.dart';
+import 'package:user_doctor_client/constant/constant.dart';
+import 'package:user_doctor_client/models/appointmentModel.dart';
+import 'package:user_doctor_client/pages/appointment/AppointmentDetail.dart';
 
 class Appointment extends StatefulWidget {
   @override
@@ -21,19 +22,6 @@ class _AppointmentState extends State<Appointment> {
   @override
   void initState() {
     super.initState();
-    getAppData();
-    print("=========$docId");
-  }
-
-  void getAppData() async {
-    db.collection("appointments").where("user_uid", isEqualTo: uid).get().then(
-        (QuerySnapshot querySnapshot) => querySnapshot.docs.forEach((element) {
-              data = element.data();
-              appModel = new AppointmentModel.fromJson(data);
-              appModelList.add(appModel);
-
-              print(appModelList[0].address);
-            }));
   }
 
   deleteAppointmentDialog(index) {
@@ -162,7 +150,7 @@ class _AppointmentState extends State<Appointment> {
         body: StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection("appointments")
-              .where("user_uid", isEqualTo: uid)
+              .where("userUid", isEqualTo: uid)
               .snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -268,112 +256,125 @@ class _AppointmentState extends State<Appointment> {
             return ListView.builder(
               itemCount: document.length,
               itemBuilder: (context, index) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(fixPadding * 2.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 80.0,
-                            height: 80.0,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(40.0),
-                              border: (document[index]['status'] == "confirmed")
-                                  ? Border.all(width: 1.0, color: Colors.green)
-                                  : Border.all(width: 1.0, color: Colors.red),
-                              color: (document[index]['status'] == "confirmed")
-                                  ? Colors.green[50]
-                                  : Colors.red[50],
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => AppointmentDetail(),
+                      ),
+                    );
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(fixPadding * 2.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 80.0,
+                              height: 80.0,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(40.0),
+                                border: (document[index]['status'] ==
+                                        "confirmed")
+                                    ? Border.all(
+                                        width: 1.0, color: Colors.green)
+                                    : Border.all(width: 1.0, color: Colors.red),
+                                color:
+                                    (document[index]['status'] == "confirmed")
+                                        ? Colors.green[50]
+                                        : Colors.red[50],
+                              ),
+                              child: Text(
+                                document[index]['date'],
+                                textAlign: TextAlign.center,
+                                style:
+                                    (document[index]['status'] == "confirmed")
+                                        ? greenColorNormalTextStyle
+                                        : redColorNormalTextStyle,
+                              ),
                             ),
-                            child: Text(
-                              document[index]['date'],
-                              textAlign: TextAlign.center,
-                              style: (document[index]['status'] == "confirmed")
-                                  ? greenColorNormalTextStyle
-                                  : redColorNormalTextStyle,
+                            widthSpace,
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        document[index]['time'],
+                                        style: blackHeadingTextStyle,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 7.0),
+                                  Text(
+                                    'Dr. ${document[index]['drName']}',
+                                    style: blackNormalTextStyle,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  SizedBox(height: 7.0),
+                                  Text(
+                                    '${document[index]['typeofDoctor']}',
+                                    style: primaryColorsmallTextStyle,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          widthSpace,
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Column(
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      document[index]['time'],
-                                      style: blackHeadingTextStyle,
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 7.0),
-                                Text(
-                                  'Dr. ${document[index]['drName']}',
-                                  style: blackNormalTextStyle,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                SizedBox(height: 7.0),
-                                Text(
-                                  '${document[index]['typeofDoctor']}',
-                                  style: primaryColorsmallTextStyle,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                                heightSpace,
+                                heightSpace,
+                                (document[index]['status'] == "confirmed")
+                                    ? Container(
+                                        child: Image.asset(
+                                          "assets/icons/checked.png",
+                                          height: 35,
+                                        ),
+                                      )
+                                    : Container(
+                                        child: Image.asset(
+                                          "assets/icons/delete.png",
+                                          height: 35,
+                                        ),
+                                      ),
                               ],
                             ),
-                          ),
-                          Column(
-                            children: [
-                              heightSpace,
-                              heightSpace,
-                              (document[index]['status'] == "confirmed")
-                                  ? Container(
-                                      child: Image.asset(
-                                        "assets/icons/checked.png",
-                                        height: 35,
+                            widthSpace,
+                            widthSpace,
+                            (document[index]['status'] == "confirmed")
+                                ? Column(
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          docIdOfSelected = document[index].id;
+                                          print(docIdOfSelected);
+                                          deleteAppointmentDialog(index);
+                                        },
+                                        child: Icon(
+                                          Icons.close,
+                                          size: 18.0,
+                                        ),
                                       ),
-                                    )
-                                  : Container(
-                                      child: Image.asset(
-                                        "assets/icons/delete.png",
-                                        height: 35,
-                                      ),
-                                    ),
-                            ],
-                          ),
-                          widthSpace,
-                          widthSpace,
-                          (document[index]['status'] == "confirmed")
-                              ? Column(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        docIdOfSelected = document[index].id;
-                                        print(docIdOfSelected);
-                                        deleteAppointmentDialog(index);
-                                      },
-                                      child: Icon(
-                                        Icons.close,
-                                        size: 18.0,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              : Container()
-                        ],
+                                    ],
+                                  )
+                                : Container()
+                          ],
+                        ),
                       ),
-                    ),
-                    divider(),
-                  ],
+                      divider(),
+                    ],
+                  ),
                 );
               },
             );

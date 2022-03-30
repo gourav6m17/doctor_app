@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:my_doctor_app/constant/constant.dart';
-import 'package:my_doctor_app/pages/login_signup/otp.dart';
-import 'package:my_doctor_app/provider/auth_provider.dart';
+import 'package:user_doctor_client/constant/constant.dart';
+import 'package:user_doctor_client/pages/login_signup/otp.dart';
+import 'package:user_doctor_client/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
@@ -22,7 +22,7 @@ class _LoginState extends State<Login> {
 
   String countryCode = "+91";
   String initialCountry = 'IN';
-  PhoneNumber number = PhoneNumber(isoCode: 'IN');
+  // PhoneNumber number = PhoneNumber(isoCode: 'IN');
   void onPhoneNumberChange(
       String number, String internationalizedPhoneNumber, String isoCode) {
     setState(() {
@@ -153,13 +153,11 @@ class _LoginState extends State<Login> {
                           ),
                           child: InternationalPhoneNumberInput(
                             textStyle: inputLoginTextStyle,
-                            autoValidate: false,
                             selectorTextStyle: TextStyle(
                               color: Colors.white,
                               fontSize: 16.0,
                               fontWeight: FontWeight.w500,
                             ),
-                            initialValue: number,
                             textFieldController: Provider.of<AuthProvider>(
                                     context,
                                     listen: false)
@@ -171,7 +169,7 @@ class _LoginState extends State<Login> {
                               hintStyle: inputLoginTextStyle,
                               border: InputBorder.none,
                             ),
-                            selectorType: PhoneInputSelectorType.DIALOG,
+                            onInputChanged: (PhoneNumber value) {},
                           ),
                         ),
                       ),

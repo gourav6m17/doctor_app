@@ -1,6 +1,6 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:flutter/material.dart';
-// import 'package:my_doctor_app/pages/home/home.dart';
+// import 'package:user_doctor_client/pages/home/home.dart';
 
 // class data extends ChangeNotifier {
 //   FirebaseFirestore db = FirebaseFirestore.instance;

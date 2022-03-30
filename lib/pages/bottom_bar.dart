@@ -1,8 +1,8 @@
 import 'dart:io';
-import 'package:my_doctor_app/constant/constant.dart';
-import 'package:my_doctor_app/pages/appointment/appointment.dart';
-import 'package:my_doctor_app/pages/home/home.dart';
-import 'package:my_doctor_app/pages/profile/profile.dart';
+import 'package:user_doctor_client/constant/constant.dart';
+import 'package:user_doctor_client/pages/appointment/appointment.dart';
+import 'package:user_doctor_client/pages/home/home.dart';
+import 'package:user_doctor_client/pages/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 

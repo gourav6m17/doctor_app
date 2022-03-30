@@ -1,16 +1,17 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:my_doctor_app/constant/constant.dart';
-import 'package:my_doctor_app/models/drModel.dart';
-import 'package:my_doctor_app/pages/doctor/doctor_profile.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:user_doctor_client/constant/constant.dart';
+import 'package:user_doctor_client/models/UserModel.dart';
+import 'package:user_doctor_client/models/drModel.dart';
+import 'package:user_doctor_client/pages/doctor/doctor_profile.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../bottom_bar.dart';
 
 class ConsultationDetail extends StatefulWidget {
@@ -20,11 +21,13 @@ class ConsultationDetail extends StatefulWidget {
       doctorExp,
       time,
       date,
-      price,
-      typeOfDoctor;
+      typeOfDoctor,
+      drUid,
+      price;
   final DrModel drObj;
   final LatLng pos;
   final int selectedAppType;
+  final int pricePayment;
 
   const ConsultationDetail(
       {Key key,
@@ -34,11 +37,13 @@ class ConsultationDetail extends StatefulWidget {
       @required this.doctorExp,
       @required this.time,
       @required this.date,
-      @required this.price,
+      @required this.pricePayment,
       @required this.selectedAppType,
       @required this.drObj,
       @required this.pos,
-      @required this.typeOfDoctor})
+      @required this.typeOfDoctor,
+      @required this.drUid,
+      @required this.price})
       : super(key: key);
 
   @override
@@ -54,6 +59,199 @@ class _ConsultationDetailState extends State<ConsultationDetail> {
   FirebaseStorage storage = FirebaseStorage.instance;
   String uid = FirebaseAuth.instance.currentUser.uid;
   var currentItemSelected;
+  int commision;
+  int commisionInApp;
+  UserModel userModel;
+
+  Razorpay _razorpay = Razorpay();
+
+  String orderId;
+
+  String paymentId;
+
+  String signature;
+  void _showDialog(
+      BuildContext context, String title, String message, Function function) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            onPressed: function,
+            child: Text('OK!'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  getCommision() {
+    db.collection("extras").doc("commision").get().then((value) {
+      final dat = value.data();
+      setState(() {
+        commision = dat['com'];
+        commisionInApp = dat['comInApp'];
+      });
+
+      print("-----------${dat['com']}");
+    });
+
+    db.collection("user").doc(uid).get().then((value) {
+      final data = value.data();
+      //data["userEmail"]
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCommision();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _razorpay.clear();
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    orderId = response.orderId;
+    paymentId = response.paymentId;
+    signature = response.signature;
+    // Do something when payment succeeds
+    print("---success----${response.orderId}");
+    addAppointmentData() async {
+      oldOrNew();
+
+      switch (typeofPatient) {
+        case "old appointment":
+          TaskSnapshot snapshot = await storage
+              .ref()
+              .child(
+                  "appointmentSlip/${patientNameController.text}+${mobileController.text}+${widget.date}")
+              .putFile(_image);
+          if (snapshot.state == TaskState.success) {
+            imgUrl = await snapshot.ref.getDownloadURL();
+            db.collection("appointments").add({
+              "created": Timestamp.now(),
+              "drUid": widget.drUid.toString(),
+              "userUid": uid,
+              'drName': widget.doctorName,
+              'typeofDoctor': widget.typeOfDoctor,
+              'date': widget.date,
+              "drAdress": widget.drObj.drAddress,
+              'time': widget.time,
+              'price': widget.pricePayment,
+              'typeofPatient': typeofPatient.toString(),
+              'patientname': patientNameController.text,
+              'age': ageController.text,
+              'mobileNo': mobileController.text,
+              'address': addressController.text,
+              'slipImg': imgUrl.toString(),
+              'status': "confirmed",
+              "orderId": orderId,
+              "paymentId": paymentId,
+              "signature": signature,
+            }).whenComplete(() {
+              Fluttertoast.showToast(
+                  msg: "Your request is received!",
+                  toastLength: Toast.LENGTH_SHORT);
+            });
+            _showDialog(context, "Success", "Your payment Succesful", () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BottomBar(),
+                ),
+              );
+            });
+          }
+
+          break;
+        default:
+          db.collection("appointments").add({
+            "created": Timestamp.now(),
+            "drUid": widget.drUid.toString(),
+            "userUid": uid,
+            'drName': widget.doctorName,
+            'typeofDoctor':
+                widget.typeOfDoctor, //cough and fever, homopath or etc.
+            'date': widget.date,
+            "drAdress": widget.drObj.drAddress,
+            'time': widget.time,
+            'price': widget.pricePayment,
+            // 'posDr': (widget.pos == null) ? "" : widget.pos,
+            'typeofPatient': typeofPatient.toString(), //old or new
+            'patientname': patientNameController.text,
+            'age': ageController.text,
+            'mobileNo': mobileController.text,
+            'address': addressController.text, // text address
+            'status': "confirmed",
+            'gender': currentItemSelected.toString(),
+            "orderId": orderId,
+            "paymentId": paymentId,
+            "signature": signature,
+          }).whenComplete(() {
+            Fluttertoast.showToast(
+                msg: "Your request is received!",
+                toastLength: Toast.LENGTH_SHORT);
+          });
+          _showDialog(context, "Success", "Your payment Succesful", () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BottomBar(),
+              ),
+            );
+          });
+      }
+    }
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Do something when payment fails
+    print("---error----${response.message}");
+    _showDialog(context, "Error Occured!", "Payement Declined!", () {
+      Navigator.of(context).pop();
+    });
+
+    Fluttertoast.showToast(
+        msg: "ERROR: " + response.code.toString() + " - " + response.message,
+        toastLength: Toast.LENGTH_SHORT);
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet was selected
+    // _showDialog(context, "Success", "Your payment Succesful");
+
+    print("---wallet----${response.walletName}");
+    Fluttertoast.showToast(
+        msg: "EXTERNAL_WALLET: " + response.walletName,
+        toastLength: Toast.LENGTH_SHORT);
+  }
+
+  doPayement() async {
+    var options = {
+      'key': paymentApiKey,
+      'amount': commision + (widget.pricePayment ?? 0),
+      'name': 'Doctor Client',
+      'description': 'Payment for appointment of Dr.${widget.doctorName}',
+      'prefill': {'contact': mobileController.text, 'email': ''},
+      'external': {
+        'wallets': ['paytm']
+      }
+    };
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      debugPrint('Error: e');
+    }
+  }
 
   String imgUrl;
   var items = ['Male', 'Female', 'Other'];
@@ -74,18 +272,20 @@ class _ConsultationDetailState extends State<ConsultationDetail> {
         TaskSnapshot snapshot = await storage
             .ref()
             .child(
-                "appointmentSlip/${patientNameController.text}+${mobileController.text}")
+                "appointmentSlip/${patientNameController.text}+${mobileController.text}+${widget.date}")
             .putFile(_image);
         if (snapshot.state == TaskState.success) {
           imgUrl = await snapshot.ref.getDownloadURL();
           db.collection("appointments").add({
-            "user_uid": uid,
+            "created": Timestamp.now(),
+            "drUid": widget.drUid.toString(),
+            "userUid": uid,
             'drName': widget.doctorName,
             'typeofDoctor': widget.typeOfDoctor,
             'date': widget.date,
             "drAdress": widget.drObj.drAddress,
             'time': widget.time,
-            'price': widget.price,
+            'price': widget.pricePayment,
             // 'posDr': (widget.pos == null) ? "" : widget.pos,
             'typeofPatient': typeofPatient.toString(),
             'patientname': patientNameController.text,
@@ -103,14 +303,15 @@ class _ConsultationDetailState extends State<ConsultationDetail> {
         break;
       default:
         db.collection("appointments").add({
-          "user_uid": uid,
+          "drUid": widget.drUid.toString(),
+          "userUid": uid,
           'drName': widget.doctorName,
           'typeofDoctor':
               widget.typeOfDoctor, //cough and fever, homopath or etc.
           'date': widget.date,
           "drAdress": widget.drObj.drAddress,
           'time': widget.time,
-          'price': widget.price,
+          'price': widget.pricePayment,
           // 'posDr': (widget.pos == null) ? "" : widget.pos,
           'typeofPatient': typeofPatient.toString(), //old or new
           'patientname': patientNameController.text,
@@ -243,7 +444,8 @@ class _ConsultationDetailState extends State<ConsultationDetail> {
   File _image;
   final picker = ImagePicker();
   Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile =
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
 
     setState(() {
       if (pickedFile != null) {
@@ -289,6 +491,7 @@ class _ConsultationDetailState extends State<ConsultationDetail> {
         child: InkWell(
           borderRadius: BorderRadius.circular(15.0),
           onTap: () {
+            print("pressed!");
             if (widget.selectedAppType == 1) {
               if (_image == null) {
                 return _showErrorDialog(context, "Please attach old receipt!");
@@ -310,31 +513,88 @@ class _ConsultationDetailState extends State<ConsultationDetail> {
             if (addressController.text.isEmpty) {
               return _showErrorDialog(context, "Enter your address");
             }
+            doPayement();
 
-            successOrderDialog();
-            addAppointmentData();
+            // if (widget.pricePayment == 0) {
+            //   addAppointmentData();
+            //   successOrderDialog();
+            // }
+
+            // if (widget.selectedAppType == 0 &&
+            //     widget.pricePayment != 0 &&
+            //     widget.selectedAppType == 1 &&
+            //     widget.selectedAppType == 1) {
 
             // Navigator.push(
-            //     context,
-            //     PageTransition(
-            //         type: PageTransitionType.rightToLeft,
-            //         duration: Duration(milliseconds: 600),
-            //         child: Payment()));
+            //   context,
+            //   PageTransition(
+            //     type: PageTransitionType.rightToLeft,
+            //     duration: Duration(milliseconds: 600),
+            //     child: Payment(
+            //         amount: widget.price.toDouble(),
+            //         drObj: widget.drObj,
+            //         date: widget.date,
+            //         drUid: widget.drUid,
+            //         doctorType: widget.doctorType,
+            //         time: widget.time,
+            //         selectedAppType: widget.selectedAppType,
+            //         doctorName: widget.doctorName,
+            //         typeOfDoctor: widget.typeOfDoctor,
+            //         addressController: addressController.text,
+            //         ageController: ageController.text,
+            //         currentGenderSelected: currentItemSelected.toString(),
+            //         mobileController: mobileController.text,
+            //         patientNameController: patientNameController.text,
+            //         typeofPatient: typeofPatient),
+            //   ),
+
+            //}
           },
           child: Container(
-            width: double.infinity,
-            height: 50.0,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15.0),
-              color: primaryColor,
-            ),
-            child: Text(
-              "Confirm",
-              // 'Confirm & Pay',
-              style: whiteColorButtonTextStyle,
-            ),
-          ),
+              width: double.infinity,
+              height: 50.0,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                color: primaryColor,
+              ),
+              child:
+                  //(widget.selectedAppType != 1 && widget.pricePayment != 0)
+                  //?
+                  Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  widget.selectedAppType == 1
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            widget.selectedAppType == 1
+                                ? Text(
+                                    "Confirm & Pay Platform Charges",
+                                    // 'Confirm & Pay',
+                                    style: whiteColorButtonTextStyle,
+                                  )
+                                : Text(
+                                    " \u{20B9} ${widget.price.toString()}",
+                                    style: whiteColorButtonTextStyle,
+                                  )
+                          ],
+                        )
+                      : Text(
+                          "(Confirm & Pay Extra Platform(${commisionInApp.toString()}) Charges!)",
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            color: whiteColor,
+                          ),
+                        ),
+                ],
+              )
+              // : Text(
+              //     "Confirm",
+              //     // 'Confirm & Pay',
+              //     style: whiteColorButtonTextStyle,
+              //   ),
+              ),
         ),
       ),
       body: Column(
@@ -466,7 +726,7 @@ class _ConsultationDetailState extends State<ConsultationDetail> {
                                 "\u{20B9} 0",
                               )
                             : Text(
-                                "\u{20B9} ${widget.price}",
+                                "\u{20B9} ${widget.price.toString()}",
                               ),
                         widthSpace,
                         Row(

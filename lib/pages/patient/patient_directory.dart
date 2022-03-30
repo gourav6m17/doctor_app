@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'package:my_doctor_app/constant/constant.dart';
-import 'package:my_doctor_app/widget/column_builder.dart';
+import 'package:user_doctor_client/constant/constant.dart';
+import 'package:user_doctor_client/widget/column_builder.dart';
 
 class PatientDirectory extends StatefulWidget {
   @override

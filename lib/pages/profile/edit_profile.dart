@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:my_doctor_app/constant/constant.dart';
+import 'package:user_doctor_client/constant/constant.dart';
 
 class EditProfile extends StatefulWidget {
   final String name, email, age, image;
@@ -43,7 +43,7 @@ class _EditProfileState extends State<EditProfile> {
   final picker = ImagePicker();
   Future getImageGallery() async {
     final pickedFileFromGallery =
-        await picker.getImage(source: ImageSource.gallery);
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
 
     setState(() {
       if (pickedFileFromGallery != null) {
@@ -56,7 +56,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Future getImageCamera() async {
     final pickedFileFromCamera =
-        await picker.getImage(source: ImageSource.camera);
+        await picker.getImage(source: ImageSource.camera, imageQuality: 50);
 
     setState(() {
       if (pickedFileFromCamera != null) {
@@ -68,21 +68,37 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future<void> updateProfile() async {
-    TaskSnapshot snapshot =
-        await storage.ref().child("user/$uid+.jpg").putFile(_image);
-    if (snapshot.state == TaskState.success) {
-      UserImgUrl = await snapshot.ref.getDownloadURL();
-    }
-    try {
-      db.collection("user").doc(uid).update({
-        'name': (name == null) ? widget.name : name,
-        'email': (email == null) ? widget.email : email,
-        'age': (age == null) ? widget.age : age,
-        'image': (UserImgUrl == null) ? widget.image : UserImgUrl,
-      });
-      print("data updated");
-    } catch (e) {
-      print(e.toString());
+    if (_image != null) {
+      TaskSnapshot snapshot =
+          await storage.ref().child("user/$uid+.jpg").putFile(_image);
+      if (snapshot.state == TaskState.success) {
+        UserImgUrl = await snapshot.ref.getDownloadURL();
+      }
+      try {
+        db.collection("user").doc(uid).update({
+          'userName': (name == null) ? widget.name : name,
+          'userEmail': (email == null) ? widget.email : email,
+          'userAge': (age == null) ? widget.age : age,
+          'userImage': (UserImgUrl == null) ? widget.image : UserImgUrl,
+        });
+        final snackBar = SnackBar(content: Text("Your Profile is updated! ✅"));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } catch (e) {
+        print(e.toString());
+      }
+    } else {
+      try {
+        db.collection("user").doc(uid).update({
+          'userName': (name == null) ? widget.name : name,
+          'userEmail': (email == null) ? widget.email : email,
+          'userAge': (age == null) ? widget.age : age,
+          'userImage': (UserImgUrl == null) ? widget.image : UserImgUrl,
+        });
+        final snackBar = SnackBar(content: Text("Your Profile is updated! ✅"));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } catch (e) {
+        print(e.toString());
+      }
     }
   }
 

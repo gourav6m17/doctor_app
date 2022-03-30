@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:my_doctor_app/constant/constant.dart';
+import 'package:user_doctor_client/constant/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:my_doctor_app/pages/screens.dart';
-import 'package:my_doctor_app/provider/auth_provider.dart';
+import 'package:user_doctor_client/pages/screens.dart';
+import 'package:user_doctor_client/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class OTPScreen extends StatefulWidget {

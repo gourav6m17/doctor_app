@@ -1,18 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:my_doctor_app/constant/constant.dart';
-import 'package:my_doctor_app/models/LabModel.dart';
-import 'package:my_doctor_app/models/drModel.dart';
+import 'package:user_doctor_client/constant/constant.dart';
+import 'package:user_doctor_client/models/LabModel.dart';
+import 'package:user_doctor_client/models/drModel.dart';
 
-import 'package:my_doctor_app/pages/screens.dart';
-import 'package:my_doctor_app/pages/search/search.dart';
-import 'package:my_doctor_app/pages/speciality/speciality.dart';
-import 'package:my_doctor_app/widget/column_builder.dart';
+import 'package:user_doctor_client/pages/screens.dart';
+import 'package:user_doctor_client/pages/search/search.dart';
+import 'package:user_doctor_client/pages/speciality/speciality.dart';
+import 'package:user_doctor_client/widget/column_builder.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-String salphnNo = "+919812337844";
+String salphnNo = "17113131313";
 Future<void> _launched;
 
 Future<void> _makePhoneCall(String url) async {
@@ -52,13 +52,22 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     getLabData();
+    db
+        .collection("doctor")
+        .where("searchKey")
+        .get()
+        .then((value) => value.docs.forEach((element) {
+              final search = element.data();
+              print("-------------${search["morningSlotList"][0].runtimeType}");
+              print("=========${search.length}");
+            }));
 
     db
         .collection("doctors")
         .where('city', isEqualTo: city)
         .where('doctorTypeList', arrayContains: {'type': "Homoeopath"})
         .get()
-        .then((QuerySnapshot querySnapshot) {
+        .then((QuerySnapshot<Map<String, dynamic>> querySnapshot) {
           querySnapshot.docs.forEach((element) {
             var data = element.data();
             GeoPoint pos = data['geoCo'];
@@ -243,12 +252,14 @@ class _HomeState extends State<Home> {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context,
-            PageTransition(
-                duration: Duration(milliseconds: 400),
-                type: PageTransitionType.scale,
-                alignment: Alignment.bottomCenter,
-                child: Search()));
+          context,
+          PageTransition(
+            duration: Duration(milliseconds: 400),
+            type: PageTransitionType.scale,
+            alignment: Alignment.bottomCenter,
+            child: Search(),
+          ),
+        );
       },
       child: Container(
         margin: EdgeInsets.all(fixPadding * 2.0),

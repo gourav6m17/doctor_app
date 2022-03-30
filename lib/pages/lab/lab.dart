@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:my_doctor_app/constant/constant.dart';
+import 'package:user_doctor_client/constant/constant.dart';
 
 class Lab extends StatefulWidget {
   final String name, address, image;

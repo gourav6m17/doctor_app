@@ -1,6 +1,6 @@
-import 'package:my_doctor_app/constant/constant.dart';
-import 'package:my_doctor_app/pages/review/review.dart';
-import 'package:my_doctor_app/widget/column_builder.dart';
+import 'package:user_doctor_client/constant/constant.dart';
+import 'package:user_doctor_client/pages/review/review.dart';
+import 'package:user_doctor_client/widget/column_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:page_transition/page_transition.dart';
@@ -9,6 +9,8 @@ import 'package:maps_launcher/maps_launcher.dart';
 class DoctorProfile extends StatefulWidget {
   final String doctorImage, doctorName, doctorType, experience, about, address;
   final LatLng pos;
+  final String time;
+  final String rating;
   const DoctorProfile(
       {Key key,
       @required this.doctorImage,
@@ -17,7 +19,9 @@ class DoctorProfile extends StatefulWidget {
       @required this.experience,
       @required this.about,
       @required this.address,
-      @required this.pos})
+      @required this.pos,
+      this.time,
+      this.rating})
       : super(key: key);
   @override
   _DoctorProfileState createState() => _DoctorProfileState();
@@ -228,12 +232,12 @@ class _DoctorProfileState extends State<DoctorProfile> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Availability',
+          "Availability",
           style: blackHeadingTextStyle,
         ),
         heightSpace,
         Text(
-          '8:00 AM - 10:30 PM',
+          widget.time,
           style: greyNormalTextStyle,
         ),
       ],
