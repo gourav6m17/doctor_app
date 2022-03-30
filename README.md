@@ -31,7 +31,7 @@ An app for taking online booking appointment for a doctor at your home and you c
     <td><img src="screenshots/register.png" width=270 height=480></td>
   </tr>
  </table>
-    - **Home** 
+  - **Home** 
         Clean and Responsive view of Home having categories of specialist according to the dieases.
         <table>
   <tr>
@@ -44,20 +44,59 @@ An app for taking online booking appointment for a doctor at your home and you c
   </tr>
  </table>
        
-        - **Choose City**    
+   - **Choose City**    
         You can change city and accrodingly you will get specialists.
-        ![CITY](/screenshots/citychoose.png)
-    - **View Doctors and Labs**    
-        ![DRLIST](/screenshots/doctorlist.png) | ![NODR](/screenshots/nodata.png) |
-        ![LABS](/screenshots/labs.png)
-    - **Search Doctors**
-         ![SEARCH](/screenshots/searchdr.png)       
-    - **Notification **    
-        ![NOTIFICATION](/screenshots/notification.png)
-    - **Profile**
-        ![DRPROFILE](/screenshots/drprofile.png) | ![USERPROFILE](/screenshots/profile.png) |![EDITPR](/screenshots/editprofile.png)
-    - Book appointment
-        ![book](/screenshots/book.png)
+        <table>
+            <tr> <td> Choose City</td></tr>
+            <tr><td> <img src="screenshots/citychoose.png" width=270 height=480></td></tr>
+        </table>
+        
+   - **View Doctors and Labs**    
+    <table>
+  <tr>
+    <td>Doctors List</td>
+     <td>No Doctors</td>
+     <td>Labs</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/doctorlist.png" width=270 height=480></td>
+    <td><img src="screenshots/nodata.png" width=270 height=480></td>
+    <td><img src="screenshots/labs.png" width=270 height=480></td>
+  </tr>
+ </table>
+       
+   - **Search Doctors**
+        <table>
+            <tr> <td> Search Doctor by there name</td></tr>
+            <tr><td> <img src="screenshots/searchdr.png" width=270 height=480></td></tr>
+        </table>
+         
+   - **Notification ** 
+        <table>
+            <tr> <td> Notification Screen</td></tr>
+            <tr><td> <img src="screenshots/notification.png" width=270 height=480></td></tr>
+        </table>   
+       
+   - **Profile**
+         <table>
+  <tr>
+    <td>Doctor Profile</td>
+     <td>User Profile</td>
+     <td>User Edit Profile</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/drprofile.png" width=270 height=480></td>
+    <td><img src="screenshots/profile.png" width=270 height=480></td>
+    <td><img src="screenshots/editprofile.png" width=270 height=480></td>
+  </tr>
+ </table>
+       
+   - Book appointment
+         <table>
+            <tr> <td> Booking Screen</td></tr>
+            <tr><td> <img src="screenshots/notification.png" width=270 height=480></td></tr>
+        </table>  
+        
 ## Credits
   - UI/UX inspired [**here**](https://www.youtube.com/watch?v=dmX7odWOIqc)  
        
