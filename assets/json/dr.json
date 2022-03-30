@@ -1,0 +1,139 @@
+{
+    "gender": "Male",
+    "timing": "10am-8pm",
+    "rating": "4.5",
+    "about": "having a great experience from all 5 year and working for humanity",
+    "photo": "https://images.unsplash.com/photo-1537368910025-700350fe46c7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80",
+    "afternoonSlotList": [
+        {
+            "time": "12:30 PM"
+        },
+        {
+            "time": "1:00 PM"
+        },
+        {
+            "time": "1:30 PM"
+        },
+        {
+            "time": "2:00 PM"
+        },
+        {
+            "time": "2:30 PM"
+        },
+        {
+            "time": "3:00 PM"
+        },
+        {
+            "time": "3:30 PM"
+        },
+        {
+            "time": "4:00 PM"
+        },
+        {
+            "time": "4:30 PM"
+        },
+        {
+            "time": "5:00 PM"
+        },
+        {
+            "time": "5:30 PM"
+        },
+        {
+            "time": "6:00 PM"
+        }
+    ],
+    "experience": "20 Year",
+    "doctorTypeList": [
+        {
+            "type": "Cough and Fever"
+        },
+        {
+            "type": "Homoeopath"
+        },
+        {
+            "type": "Gynecologist"
+        },
+        {
+            "type": "Pediatrician"
+        }
+    ],
+    "eveningSlotList": [
+        {
+            "time": "12:30 PM"
+        },
+        {
+            "time": "1:00 PM"
+        },
+        {
+            "time": "1:30 PM"
+        },
+        {
+            "time": "2:00 PM"
+        },
+        {
+            "time": "2:30 PM"
+        },
+        {
+            "time": "3:00 PM"
+        },
+        {
+            "time": "3:30 PM"
+        },
+        {
+            "time": "4:00 PM"
+        },
+        {
+            "time": "4:30 PM"
+        },
+        {
+            "time": "5:00 PM"
+        },
+        {
+            "time": "5:30 PM"
+        },
+        {
+            "time": "6:00 PM"
+        }
+    ],
+    "price": "500",
+    "name": "Dr. Kamal singh",
+    "location": "Kini ki diwar, Chapra",
+    "morningSlotList": [
+        {
+            "time": "12:30 PM"
+        },
+        {
+            "time": "1:00 PM"
+        },
+        {
+            "time": "1:30 PM"
+        },
+        {
+            "time": "2:00 PM"
+        },
+        {
+            "time": "2:30 PM"
+        },
+        {
+            "time": "3:00 PM"
+        },
+        {
+            "time": "3:30 PM"
+        },
+        {
+            "time": "4:00 PM"
+        },
+        {
+            "time": "4:30 PM"
+        },
+        {
+            "time": "5:00 PM"
+        },
+        {
+            "time": "5:30 PM"
+        },
+        {
+            "time": "6:00 PM"
+        }
+    ]
+}
