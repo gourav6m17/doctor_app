@@ -19,9 +19,9 @@ An app for taking online booking appointment for a doctor at your home and you c
 ## Screenshot
     - Login/Sign up 
         For Login and Sign up Phone Auth is used from Firebase Authenication.
-    ![LOGIN](screenshots/login.png)
-    ![OTP](screenshots/otp.png) 
-    ![REGISTER](screenshots/register.png)
+    ![](screenshots/login.png)
+    ![](screenshots/otp.png) 
+    ![](screenshots/register.png)
     - Home 
         Clean and Responsive view of Home having categories of specialist according to the dieases.
         ![HOME](screenshots/home.png)
