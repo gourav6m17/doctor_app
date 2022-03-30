@@ -3,14 +3,47 @@
 An app for taking online booking appointment for a doctor at your home and you can take consultation. This application is linekd with Firebase for Authentication, Firestore Database
 
 ## Getting Started
+    1. git clone https://github.com/gourav6m17/doctor_app.git
+    2. after cloning flutter pub get
+    3. add firebase to your project [demonstrate here](https://firebase.google.com/docs/flutter/setup?platform=android)
+    4. optional: add razorpay test api to the file lib/constant/constant.dart
+    5. flutter run
+## Features
+    - Working Online with [**Firebase**](https://firebase.google.com/) as Backend Service
+    - Realtime data
+    - Location based
+    - [**Razorpay**](https://razorpay.com/) Payment Gateway integrated for payment acceptence
+    - Easy Customisation for themes color
+    - Provider used for state management
 
-This project is a starting point for a Flutter application.
+## Screenshot
+    - [**Login/Sign up**] 
+        For Login and Sign up Phone Auth is used from Firebase Authenication.
+    (screenshots/login.png)(screenshots/otp.png) (screenshots/register.png)
+    - [**Home**] 
+        Clean and Responsive view of Home having categories of specialist according to the dieases.
+        (screenshots/home.png)
+    - [**Choose City**]    
+        You can change city and accrodingly you will get specialists.
+        (screenshots/citychoose.png)
+    - [**View Doctors and Labs**]    
+        (screenshots/doctorlist.png) (screenshots/nodata.png) (screenshots/labs.png)
+    - [**Search Doctors**]
+         (screenshots/searchdr.png)       
+    - [**Notification**]     
+        (screenshots/notification.png)
+    - [**Profile**]
+        (screenshots/drprofile.png) (screenshots/profile.png)(screenshots/editprofile.png)
+    - [**Book appointment**]
+        (screenshots/book.png)
+## Credits
+  - UI/UX inspired [**here**](https://www.youtube.com/watch?v=dmX7odWOIqc)  
+       
+## License
+Copyright 2022 Gourav Kumar
 
-A few resources to get you started if this is your first Flutter project:
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+http://www.apache.org/licenses/LICENSE-2.0
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.        
