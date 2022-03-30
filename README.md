@@ -9,39 +9,55 @@ An app for taking online booking appointment for a doctor at your home and you c
     4. optional: add razorpay test api to the file lib/constant/constant.dart
     5. flutter run
 ## Features
-    - Working Online with [**Firebase**](https://firebase.google.com/) as Backend Service
+    - Working Online with [**FIREBASE**](https://firebase.google.com/) as Backend Service
     - Realtime data
     - Location based
     - [**Razorpay**](https://razorpay.com/) Payment Gateway integrated for payment acceptence
     - Easy Customisation for themes color
     - Provider used for state management
-
 ## Screenshot
-    - **Login/Sign up** 
+
+   - **Login/Sign up** 
         For Login and Sign up Phone Auth is used from Firebase Authenication.
-    ![](screenshots/book.png)
-    ![](screenshots/otp.png) 
-    ![](screenshots/register.png)
+        <table>
+  <tr>
+    <td>Login Screen</td>
+     <td>Otp Screen</td>
+     <td>Register for First Time</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/login.png" width=270 height=480></td>
+    <td><img src="screenshots/otp.png" width=270 height=480></td>
+    <td><img src="screenshots/register.png" width=270 height=480></td>
+  </tr>
+ </table>
     - **Home** 
         Clean and Responsive view of Home having categories of specialist according to the dieases.
-        ![HOME](screenshots/home.png)
-    - Choose City    
+        <table>
+  <tr>
+    <td>Home Page</td>
+    
+  </tr>
+  <tr>
+    <td><img src="/screenshots/home.png" width=270 height=480></td>
+   
+  </tr>
+ </table>
+       
+        - **Choose City**    
         You can change city and accrodingly you will get specialists.
-        ![CITY](screenshots/citychoose.png)
-    - View Doctors and Labs    
-        ![DRLIST](screenshots/doctorlist.png) |![NODR](screenshots/nodata.png) |
-        ![LABS](screenshots/labs.png)
-        
-    - Search Doctors
-         ![SEARCH](screenshots/searchdr.png)       
-    - Notification     
-        ![NOTIFICATION](screenshots/notification.png)
-    - Profile
-        ![DRPROFILE](screenshots/drprofile.png) | ![USERPROFILE](screenshots/profile.png) |![EDITPR](screenshots/editprofile.png)
-        
-        
+        ![CITY](/screenshots/citychoose.png)
+    - **View Doctors and Labs**    
+        ![DRLIST](/screenshots/doctorlist.png) | ![NODR](/screenshots/nodata.png) |
+        ![LABS](/screenshots/labs.png)
+    - **Search Doctors**
+         ![SEARCH](/screenshots/searchdr.png)       
+    - **Notification **    
+        ![NOTIFICATION](/screenshots/notification.png)
+    - **Profile**
+        ![DRPROFILE](/screenshots/drprofile.png) | ![USERPROFILE](/screenshots/profile.png) |![EDITPR](/screenshots/editprofile.png)
     - Book appointment
-        ![LOGIN](screenshots/book.png)
+        ![book](/screenshots/book.png)
 ## Credits
   - UI/UX inspired [**here**](https://www.youtube.com/watch?v=dmX7odWOIqc)  
        
