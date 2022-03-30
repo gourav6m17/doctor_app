@@ -17,24 +17,30 @@ An app for taking online booking appointment for a doctor at your home and you c
     - Provider used for state management
 
 ## Screenshot
-    - [**Login/Sign up**] 
+    - Login/Sign up 
         For Login and Sign up Phone Auth is used from Firebase Authenication.
-    (screenshots/login.png)(screenshots/otp.png) (screenshots/register.png)
-    - [**Home**] 
+    (screenshots/login.png)
+    (screenshots/otp.png) 
+    (screenshots/register.png)
+    - Home 
         Clean and Responsive view of Home having categories of specialist according to the dieases.
         (screenshots/home.png)
-    - [**Choose City**]    
+    - Choose City    
         You can change city and accrodingly you will get specialists.
         (screenshots/citychoose.png)
-    - [**View Doctors and Labs**]    
-        (screenshots/doctorlist.png) (screenshots/nodata.png) (screenshots/labs.png)
-    - [**Search Doctors**]
+    - View Doctors and Labs    
+        (screenshots/doctorlist.png) 
+        (screenshots/nodata.png) 
+        (screenshots/labs.png)
+    - Search Doctors
          (screenshots/searchdr.png)       
-    - [**Notification**]     
+    - Notification     
         (screenshots/notification.png)
-    - [**Profile**]
-        (screenshots/drprofile.png) (screenshots/profile.png)(screenshots/editprofile.png)
-    - [**Book appointment**]
+    - Profile
+        (screenshots/drprofile.png) 
+        (screenshots/profile.png)
+        (screenshots/editprofile.png)
+    - Book appointment
         (screenshots/book.png)
 ## Credits
   - UI/UX inspired [**here**](https://www.youtube.com/watch?v=dmX7odWOIqc)  
