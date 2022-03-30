@@ -17,12 +17,12 @@ An app for taking online booking appointment for a doctor at your home and you c
     - Provider used for state management
 
 ## Screenshot
-    - Login/Sign up 
+    - **Login/Sign up** 
         For Login and Sign up Phone Auth is used from Firebase Authenication.
-    ![](screenshots/login.png)
+    ![](screenshots/book.png)
     ![](screenshots/otp.png) 
     ![](screenshots/register.png)
-    - Home 
+    - **Home** 
         Clean and Responsive view of Home having categories of specialist according to the dieases.
         ![HOME](screenshots/home.png)
     - Choose City    
