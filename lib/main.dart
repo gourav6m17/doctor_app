@@ -19,7 +19,6 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  // final Future<FirebaseApp> _initialization = Firebase.initializeApp();  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -42,12 +41,7 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.transparent,
         ),
         debugShowCheckedModeBanner: false,
-        // builder: (context, child) {
-        //   return ScrollConfiguration(
-        //     behavior: MyBehavior(),
-        //     child: child,
-        //   );
-        // },
+        
         home: SplashScreen(),
       ),
     );
